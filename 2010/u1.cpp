@@ -7,18 +7,19 @@ using namespace std;
 
 
 int skaiciuoti(int(&data)[MOKINIAI]) {
+    // reikalavimai sachmatu lenta sudaryti
     static int sachmatuLenta[6] = {8, 2, 2, 2, 1, 1};
 
-    int added[6] = {};
+    int naujaLenta[6] = {};
 
     for (int i = 1; i < data[0] * 6 + 1; i++) {
-        added[(i-1) % 6] += data[i];
+        naujaLenta[(i-1) % 6] += data[i];
     }
 
     int res = INT_MAX;
 
     for (int i = 0; i < 6; i++) {
-        int kiekis = added[i] / sachmatuLenta[i];
+        int kiekis = naujaLenta[i] / sachmatuLenta[i];
 
         if (kiekis < res) res = kiekis;
     }
