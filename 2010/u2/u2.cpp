@@ -38,6 +38,7 @@ bool load(const char* path, DishSet& data) {
 
     fin >> data.productAmount >> data.dishAmount;
     
+    // size_t => basically positive numbers
     // cost for each product
     for (size_t i = 0; i < data.productAmount; i++) {
         fin >> data.productCosts[i];
@@ -87,7 +88,6 @@ int Dish::calculate() {
 }
 
 
-//
 int DishSet::calculate() {
     int sum = 0;
 
