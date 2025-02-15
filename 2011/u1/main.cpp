@@ -13,17 +13,17 @@ struct Glove {
 };
 
 bool load(const char* path, int& gloveCount, Glove data[]);
-int countFemalePairs(const Glove data[], int gloveCount);
-int countMalePairs(const Glove data[], int gloveCount);
+void countPairs(const Glove data[], int gloveCount, int& fpairs, int& mpairs, int& leftoverFpairs, int& leftoverMpairs);
+bool save(const char* path, int fpairs, int mpairs, int leftoverFpairs, int leftoverMpairs);
 
 int main() {
     Glove data[MAX_GLOVES];
     int gloveCount = 0;
+    int fpairs, mpairs, leftoverFpairs, leftoverMpairs;
+
     if (!load("u1.txt", gloveCount, data)) return 1;
-    //return !save("u1res.txt", data);
-    countFemalePairs(data, gloveCount);
-    countMalePairs(data, gloveCount);
-    return 0;
+    countPairs(data, gloveCount, fpairs, mpairs, leftoverFpairs, leftoverMpairs);
+    return !save("u1res.txt", fpairs, mpairs, leftoverFpairs, leftoverMpairs);
 }
 
 bool load(const char* path, int& gloveCount, Glove data[]) {
@@ -38,44 +38,49 @@ bool load(const char* path, int& gloveCount, Glove data[]) {
     return true;
 }
 
-int countFemalePairs(const Glove data[], int gloveCount) {
-    int leftCount[MAX_SIZE] = {0};
-    int rightCount[MAX_SIZE] = {0};
-    int fpairs = 0;
+bool save(const char* path, int fpairs, int mpairs, int leftoverFpairs, int leftoverMpairs) {
+    ofstream fout(path);
 
+    fout << fpairs << endl << mpairs << endl << leftoverFpairs << endl << leftoverMpairs;
+
+    return true;
+}
+
+
+void countPairs(const Glove data[], int gloveCount, int& fpairs, int& mpairs, int& leftoverFpairs, int& leftoverMpairs) {
+    int maleLeftCount[MAX_SIZE] = {0};
+    int maleRightCount[MAX_SIZE] = {0};
+    int femaleLeftCount[MAX_SIZE] = {0};
+    int femaleRightCount[MAX_SIZE] = {0};
+    int totalFgloves = 0, totalMgloves = 0;
     for (int i = 0; i < gloveCount; i++) {
         if (data[i].gender == 4) {
             if (data[i].hand == 1) {
-                leftCount[data[i].size]++;
+                femaleLeftCount[data[i].size]++;
             } else if (data[i].hand == 2) {
-                rightCount[data[i].size]++;
+                femaleRightCount[data[i].size]++;
             }
         }
-    }
 
-    for (int i = 0; i < MAX_SIZE; i++) {
-        fpairs += min(leftCount[i], rightCount[i]);
-    }
-    return fpairs;
-}
-
-int countMalePairs(const Glove data[], int gloveCount) {
-    int leftCount[MAX_SIZE] = {0};
-    int rightCount[MAX_SIZE] = {0};
-    int mpairs = 0;
-
-    for (int i = 0; i < gloveCount; i++) {
         if (data[i].gender == 3) {
             if (data[i].hand == 1) {
-                leftCount[data[i].size]++;
+                maleLeftCount[data[i].size]++;
             } else if (data[i].hand == 2) {
-                rightCount[data[i].size]++;
+                maleRightCount[data[i].size]++;
             }
         }
     }
 
     for (int i = 0; i < MAX_SIZE; i++) {
-        mpairs += min(leftCount[i], rightCount[i]);
+        fpairs += min(femaleLeftCount[i], femaleRightCount[i]);
+        mpairs += min(maleLeftCount[i], maleRightCount[i]);
+
+        totalFgloves += femaleLeftCount[i] + femaleRightCount[i];
+        totalMgloves += maleLeftCount[i] + maleRightCount[i];
     }
-    return mpairs;
+
+    leftoverFpairs = totalFgloves - (2 * fpairs);
+    leftoverMpairs = totalMgloves - (2 * mpairs);
+
+    cout << "M-" << mpairs << " " << "F-" << fpairs << " LM-" << leftoverMpairs << " LF-" << leftoverFpairs;
 }
