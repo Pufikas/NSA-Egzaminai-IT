@@ -43,6 +43,7 @@ bool save(const char* path, int fpairs, int mpairs, int leftoverFpairs, int left
 
     fout << fpairs << endl << mpairs << endl << leftoverFpairs << endl << leftoverMpairs;
 
+    fout.close();
     return true;
 }
 
@@ -53,6 +54,8 @@ void countPairs(const Glove data[], int gloveCount, int& fpairs, int& mpairs, in
     int femaleLeftCount[MAX_SIZE] = {0};
     int femaleRightCount[MAX_SIZE] = {0};
     int totalFgloves = 0, totalMgloves = 0;
+    fpairs = 0, mpairs = 0, leftoverFpairs = 0, leftoverMpairs = 0;
+
     for (int i = 0; i < gloveCount; i++) {
         if (data[i].gender == 4) {
             if (data[i].hand == 1) {
@@ -60,9 +63,7 @@ void countPairs(const Glove data[], int gloveCount, int& fpairs, int& mpairs, in
             } else if (data[i].hand == 2) {
                 femaleRightCount[data[i].size]++;
             }
-        }
-
-        if (data[i].gender == 3) {
+        } else if (data[i].gender == 3) {
             if (data[i].hand == 1) {
                 maleLeftCount[data[i].size]++;
             } else if (data[i].hand == 2) {
@@ -81,6 +82,4 @@ void countPairs(const Glove data[], int gloveCount, int& fpairs, int& mpairs, in
 
     leftoverFpairs = totalFgloves - (2 * fpairs);
     leftoverMpairs = totalMgloves - (2 * mpairs);
-
-    cout << "M-" << mpairs << " " << "F-" << fpairs << " LM-" << leftoverMpairs << " LF-" << leftoverFpairs;
 }
