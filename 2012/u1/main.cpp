@@ -1,5 +1,5 @@
 #include <fstream>
-#include <iostream>
+
 using namespace std;
 
 
@@ -47,38 +47,28 @@ void load(const char* path, Player players[], int& n) {
         }
     }
 
-    cout << players[0].bench << endl;
     fin.close();
 }
 
 
 void sortByPlaytime(Player players[], int n) {
-    Player temp;
-
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             if (players[i].play < players[j].play || 
             (players[i].play == players[j].play && players[i].number > players[j].number)) {
-                temp = players[i];
-                players[i] = players[j];
-                players[j] = temp;
+                swap(players[i], players[j]);
             }
         }
-        cout << players[i].number << endl;
     }
 }
 
 
 void sortByNumber(Player players[], int n) {
-    Player temp;
-
     // sort by number in asc order
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             if (players[i].number > players[j].number) {
-                temp = players[i];
-                players[i] = players[j];
-                players[j] = temp;
+                swap(players[i], players[j]);
             }
         }
     }
@@ -88,9 +78,16 @@ void save(const char* path, Player players[], int n) {
     ofstream fout(path);
     int maxPlay = 0, maxPlayNum = 0, maxBench = 0, maxBenchNum = 0;
 
-    sortByNumber(players, 5);
+    // not getting the correct top 5 players
+    Player top5[5];
     for (int i = 0; i < 5; i++) {
-        fout << players[i].number << " ";
+        top5[i] = players[i];
+    }
+    sortByNumber(top5, 5);
+
+    // top 5 players by playtime
+    for (int i = 0; i < 5; i++) {
+        fout << top5[i].number << " ";
     }
     fout << endl;
 
