@@ -23,7 +23,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         executeSequence(startingCoords, goal, coords[i], sequenceLength[i], results[i]);
     }
-    save("u2rez.txt", results, n);
+    save("u2res.txt", results, n);
     return 0;
 }
 
