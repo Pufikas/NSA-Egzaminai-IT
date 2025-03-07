@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-
+#include <iomanip>
 
 using namespace std;
 
@@ -8,12 +8,13 @@ using namespace std;
 struct Avis {
     string vardas;
     string DNR;
-    int DNRKoef = 0;
+    int DNRKoef;
 };
 
 void load(const char* path, int& n, int& m, int& k, Avis*& data);
 void calculate(int& n, int& m, int& k, Avis*& data);
 void save(const char* path, int& n, int& m, int& k, Avis*& data);
+void rikiuoti(int& n, Avis*& data);
 
 int main() {
     int n, m, k; // n -> aviu skaicius, m -> DNR fragmento ilgis, k -> tiriamosios eiles nr
@@ -30,16 +31,30 @@ int main() {
 }
 
 
-void rikiuoti() // ...
+void rikiuoti(int& n, Avis*& data) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (data[i].DNRKoef < data[j].DNRKoef || 
+                (data[i].DNRKoef == data[j].DNRKoef && data[i].vardas > data[j].vardas)) {
+                swap(data[i], data[j]);
+            }
+        }
+    }
+}
 
 void save(const char* path, int& n, int& m, int& k, Avis*& data) {
     ofstream fout(path);
 
-    fout << data[k-1].vardas << endl;
+    Avis refSheep = data[k]; // remember our main sheep
 
-    for (int i = 0; i < n; i++) {
-        if ((k-1) == i) continue;
-        data[i].vardas[0] = toupper(data[i].vardas[0]); // pirmose 10 pozicijų – avies vardas (pirmoji raidė – didžioji);
+    rikiuoti(n, data);
+    
+    fout << refSheep.vardas << endl;
+
+    for (int i = 0; i < n; i++) { // stop at the last entry
+        if (data[i].vardas == refSheep.vardas) continue;
+        //data[i].vardas[0] = toupper(data[i].vardas[0]); // pirmose 10 pozicijų – avies vardas (pirmoji raidė – didžioji);
+        
         fout << setw(10) << left << data[i].vardas << " " << data[i].DNRKoef << endl;
     }
 
@@ -47,22 +62,19 @@ void save(const char* path, int& n, int& m, int& k, Avis*& data) {
 }
 
 void calculate(int& n, int& m, int& k, Avis*& data) {
-    int mainSubj = k - 1; // cuz i starts from 0 in our case
     for (int i = 0; i < n; i++) {
         data[i].DNRKoef = 0;
     }
 
     for (int i = 0; i < n; i++) {
-        if (i == mainSubj) continue;
+        if (i == k) continue;
         
         for (int pos = 0; pos < m; pos++) { // loop through each char
-            if (data[mainSubj].DNR[pos] == data[i].DNR[pos]) {
+            if (data[k].DNR[pos] == data[i].DNR[pos]) {
                 data[i].DNRKoef++;
             }
         }
     }
-
-    //cout << data[1].DNRKoef << endl;
 }
 
 void load(const char* path, int& n, int& m, int& k, Avis*& data) {
@@ -71,6 +83,7 @@ void load(const char* path, int& n, int& m, int& k, Avis*& data) {
     fin >> n >> m;
     fin >> k;
 
+    k = k - 1; // cuz our data starts from 0
     data = new Avis[n];
     
     for (int i = 0; i < n; i++) {
