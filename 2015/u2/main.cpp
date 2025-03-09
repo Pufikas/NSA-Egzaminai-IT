@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <iomanip>
 
@@ -22,10 +21,7 @@ int main() {
     load("u2.txt", n, m, k, data);
     calculate(n, m, k, data);
     save("u2res.txt", n, m, k, data);
-    for (int i = 0; i < n; i++) {
-        cout << data[i].vardas << " " << data[i].DNR << " " << data[i].DNRKoef << endl;
-    }
-
+    
     delete[] data;
     return 0;
 }
@@ -88,10 +84,8 @@ void load(const char* path, int& n, int& m, int& k, Avis*& data) {
     
     for (int i = 0; i < n; i++) {
         fin >> data[i].vardas >> data[i].DNR;    
-        //cout << data[i] << " " << endl;
     }
 
     
-
     fin.close();
 }
