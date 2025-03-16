@@ -1,9 +1,6 @@
-#include <iostream>
 #include <fstream>
 
 using namespace std;
-
-
 
 void skaiciavimai(int spalvos[3], int& veliavuKiekis) {
     int maz = spalvos[0];
