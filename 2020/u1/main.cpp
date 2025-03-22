@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -12,19 +11,20 @@ int menuoIDiena(int menuo, int diena) {
 }
 
 int vertimasIMenesi(int diena) {
-    if (diena > 30) return 7;
-    if (diena > 61) return 8;
+    if (diena <= 30) return 6;
+    if (diena <= 61) return 7;
 
-    return 6;
+    return 8;
 }
 
 int vertimasIDienas(int diena) {
-    if (diena > 30) return diena % 30;
-    if (diena > 61) return diena % 61;
+    if (diena <= 30) return diena;
+    if (diena <= 61) return diena - 30;
 
     return diena;
 }
 
+// randa pirma diena kai zydi daugiausia geliu
 int didzPrad(int Zydi[]) {
     int didz = -1;
     int didzNr = -1;
@@ -38,6 +38,7 @@ int didzPrad(int Zydi[]) {
     return didzNr;
 }
 
+// paskutine diena kai zydi daugiausia geliu
 int didzPab(int Zydi[], int daugiausiaZydi) {
     int didzNr = -1;
 
@@ -71,11 +72,11 @@ void rasyti(int daugiausiaZydi, int pradziosDiena, int pabaigosDiena) {
 
     int pradMen = vertimasIMenesi(pradziosDiena);
     int pradDien = vertimasIDienas(pradziosDiena);
-    fout << pradMen << " " << pradziosDiena << endl;
+    fout << pradMen << " " << pradDien << endl;
 
     int pabMen = vertimasIMenesi(pabaigosDiena);
     int pabDien = vertimasIDienas(pabaigosDiena);
-    fout << pabMen << " " << pabaigosDiena << endl;
+    fout << pabMen << " " << pabDien << endl;
 
     fout.close();
 }
@@ -91,10 +92,7 @@ int main() {
         if (Zydi[i] > daugiausiaZydi) daugiausiaZydi = Zydi[i];
     }
 
-    int pradziosDiena = didzPrad(Zydi);
-    int pabaigosDiena = didzPab(Zydi, daugiausiaZydi);
-
-    rasyti(daugiausiaZydi, pradziosDiena, pabaigosDiena);
+    rasyti(daugiausiaZydi, didzPrad(Zydi), didzPab(Zydi, daugiausiaZydi));
 
     return 0;
 }
