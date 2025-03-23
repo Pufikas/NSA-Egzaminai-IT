@@ -66,17 +66,12 @@ void skaityti(int &n, int Zydi[]) {
 }
 
 void rasyti(int daugiausiaZydi, int pradziosDiena, int pabaigosDiena) {
-    ofstream fout("U1rez.txt");
+    ofstream fout("u1res.txt");
 
     fout << daugiausiaZydi << endl;
 
-    int pradMen = vertimasIMenesi(pradziosDiena);
-    int pradDien = vertimasIDienas(pradziosDiena);
-    fout << pradMen << " " << pradDien << endl;
-
-    int pabMen = vertimasIMenesi(pabaigosDiena);
-    int pabDien = vertimasIDienas(pabaigosDiena);
-    fout << pabMen << " " << pabDien << endl;
+    fout << vertimasIMenesi(pradziosDiena) << " " << vertimasIDienas(pradziosDiena) << endl;
+    fout << vertimasIMenesi(pabaigosDiena) << " " << vertimasIDienas(pabaigosDiena) << endl;
 
     fout.close();
 }
