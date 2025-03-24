@@ -17,7 +17,7 @@ struct Zuvis {
     int masesSuma = 0;
 };
 
-void skaityti(int &m, int &n, int &k, Zvejys Z[], Zuvis T[]) {
+void skaityti(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     ifstream fin("u2.txt");
     char laikinas[21];
 
@@ -51,12 +51,48 @@ void skaityti(int &m, int &n, int &k, Zvejys Z[], Zuvis T[]) {
     fin.close();
 }
 
+// zuvu masese skaiciavimas
+void skaiciavimas2(int &n, int &k, Zvejys Z[], Zuvis T[]) {
+    for (int i = 0; i < k; i++) { // zuvu vertinimo sarasas
+        for (int j = 0; j < n; j++) { // zveju sarasas
+            for (int x = 0; x < Z[i].kiekis; x++) { // zveju zuvys
+                if (T[i].pav == Z[j].zuviesPav[a]) {
+                    T[i].masesSuma += Z[j].zuviesMase[n];
+                }
+            }
+        }
+    }
+}
+
+
+// zuvu tasku skaiciavimas
+void skaiciavimas(int &n, int &k, Zvejys Z[], Zuvis T[]) {
+    for (int i = 0; i < n; i++) { // per zvejus
+        for (int j = 0; j < Z[i].kiekis; j++) { // zuvu vertinimo sarasas
+            for (int x = 0; x < k; x++) { // zvejo pagautu zuvu sararas
+                if (T[x].pav == Z[i].zuviesPav[j]) {
+                    cout << T[i].pav << " " << T[x].pav << " " << T[x].taskai << endl;
+                
+                    if (Z[i].zuviesMase[j] >= 200) {
+                        Z[i].taskai += 30 + T[x].taskai;
+                    } else {
+                        Z[i].taskai += 10 + T[x].taskai;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 int main() {
-    int m, n, k;
+    int n, k;
     Zvejys Z[31];
     Zuvis T[31];
 
-    skaityti(m, n, k, Z, T);
+    skaityti(n, k, Z, T);
+    skaiciavimas(n, k, Z, T);
+
 
     return 0;
 }
