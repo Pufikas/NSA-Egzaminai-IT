@@ -51,13 +51,13 @@ void skaityti(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     fin.close();
 }
 
-// zuvu masese skaiciavimas
+// zuvu mases skaiciavimas
 void skaiciavimas2(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     for (int i = 0; i < k; i++) { // zuvu vertinimo sarasas
         for (int j = 0; j < n; j++) { // zveju sarasas
             for (int x = 0; x < Z[i].kiekis; x++) { // zveju zuvys
-                if (T[i].pav == Z[j].zuviesPav[a]) {
-                    T[i].masesSuma += Z[j].zuviesMase[n];
+                if (T[i].pav == Z[j].zuviesPav[x]) {
+                    T[i].masesSuma += Z[j].zuviesMase[x];
                 }
             }
         }
@@ -67,11 +67,11 @@ void skaiciavimas2(int &n, int &k, Zvejys Z[], Zuvis T[]) {
 
 // zuvu tasku skaiciavimas
 void skaiciavimas(int &n, int &k, Zvejys Z[], Zuvis T[]) {
-    for (int i = 0; i < n; i++) { // per zvejus
+    for (int i = 0; i < n; i++) { // zvejai
         for (int j = 0; j < Z[i].kiekis; j++) { // zuvu vertinimo sarasas
             for (int x = 0; x < k; x++) { // zvejo pagautu zuvu sararas
                 if (T[x].pav == Z[i].zuviesPav[j]) {
-                    cout << T[i].pav << " " << T[x].pav << " " << T[x].taskai << endl;
+                    //cout << T[i].pav << " " << T[x].pav << " " << T[x].taskai << endl;
                 
                     if (Z[i].zuviesMase[j] >= 200) {
                         Z[i].taskai += 30 + T[x].taskai;
@@ -84,6 +84,9 @@ void skaiciavimas(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     }
 }
 
+void rikiuoti(Zuvis T[], int k) {
+
+}
 
 int main() {
     int n, k;
@@ -92,6 +95,12 @@ int main() {
 
     skaityti(n, k, Z, T);
     skaiciavimas(n, k, Z, T);
+    skaiciavimas2(n, k, Z, T);
+
+    for(int i = 0; i < n; i++)
+    {
+        cout << Z[i].pav << " " << Z[i].taskai << endl;
+    }
 
 
     return 0;
