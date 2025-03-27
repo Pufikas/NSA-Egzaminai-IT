@@ -97,9 +97,13 @@ int main() {
     skaiciavimas(n, k, Z, T);
     skaiciavimas2(n, k, Z, T);
 
-    for(int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         cout << Z[i].pav << " " << Z[i].taskai << endl;
+    }
+
+    cout << endl;
+    for (int i = 0; i < k; i++) {
+        cout << T[i].pav << " " << T[i].masesSuma << endl;
     }
 
 
