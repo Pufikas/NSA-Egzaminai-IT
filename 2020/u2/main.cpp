@@ -88,6 +88,22 @@ void rikiuoti(Zuvis T[], int k) {
 
 }
 
+void rasyti(int &n, int &k, Zvejys Z[], Zuvis T[]) {
+    ofstream fout("u2res.txt");
+
+    fout << "Dalyviai" << endl;
+    for (int i = 0; i < n; i++) {
+        fout << Z[i].pav << " " << Z[i].taskai << endl;
+    }
+
+    fout << "Laimikis" << endl;
+    for (int i = 0; i < k; i++) {
+        fout << T[i].pav << " " << T[i].masesSuma << endl;
+    }
+
+    fout.close();
+}
+
 int main() {
     int n, k;
     Zvejys Z[31];
@@ -96,15 +112,8 @@ int main() {
     skaityti(n, k, Z, T);
     skaiciavimas(n, k, Z, T);
     skaiciavimas2(n, k, Z, T);
-
-    for (int i = 0; i < n; i++) {
-        cout << Z[i].pav << " " << Z[i].taskai << endl;
-    }
-
-    cout << endl;
-    for (int i = 0; i < k; i++) {
-        cout << T[i].pav << " " << T[i].masesSuma << endl;
-    }
+    rasyti(n, k, Z, T);
+    
 
 
     return 0;
