@@ -84,8 +84,28 @@ void skaiciavimas(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     }
 }
 
-void rikiuoti(Zuvis T[], int k) {
+void rikiuotiZuvis(Zuvis T[], int k) {
+    for (int i = 0; i < k-1; i++) {
+        for (int j = i+1; j < k; j++) {
+            if (T[i].masesSuma > T[j].masesSuma) {
+                swap(T[i], T[j]);
+            } else if (T[i].masesSuma == T[j].masesSuma && T[i].pav > T[j].pav) {
+                swap(T[i], T[j]);
+            }
+        }
+    }
+}
 
+void rikiuotiDalyvius(Zvejys Z[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (Z[i].taskai < Z[j].taskai) {
+                swap(Z[i], Z[j]);
+            } else if (Z[i].taskai == Z[j].taskai && Z[i].pav > Z[j].pav) {
+                swap(Z[i], Z[j]);
+            }
+        }
+    }
 }
 
 void rasyti(int &n, int &k, Zvejys Z[], Zuvis T[]) {
@@ -113,6 +133,8 @@ int main() {
     skaiciavimas(n, k, Z, T);
     skaiciavimas2(n, k, Z, T);
     rasyti(n, k, Z, T);
+    rikiuotiZuvis(T, k);
+    rikiuotiDalyvius(Z, n);
     
 
 
