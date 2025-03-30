@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -51,28 +50,12 @@ void skaityti(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     fin.close();
 }
 
-// zuvu mases skaiciavimas
-void skaiciavimas2(int &n, int &k, Zvejys Z[], Zuvis T[]) {
-    for (int i = 0; i < k; i++) { // zuvu vertinimo sarasas
-        for (int j = 0; j < n; j++) { // zveju sarasas
-            for (int x = 0; x < Z[i].kiekis; x++) { // zveju zuvys
-                if (T[i].pav == Z[j].zuviesPav[x]) {
-                    T[i].masesSuma += Z[j].zuviesMase[x];
-                }
-            }
-        }
-    }
-}
-
-
 // zuvu tasku skaiciavimas
 void skaiciavimas(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     for (int i = 0; i < n; i++) { // zvejai
         for (int j = 0; j < Z[i].kiekis; j++) { // zuvu vertinimo sarasas
             for (int x = 0; x < k; x++) { // zvejo pagautu zuvu sararas
                 if (T[x].pav == Z[i].zuviesPav[j]) {
-                    //cout << T[i].pav << " " << T[x].pav << " " << T[x].taskai << endl;
-                
                     if (Z[i].zuviesMase[j] >= 200) {
                         Z[i].taskai += 30 + T[x].taskai;
                     } else {
@@ -84,10 +67,23 @@ void skaiciavimas(int &n, int &k, Zvejys Z[], Zuvis T[]) {
     }
 }
 
+// zuvu mases skaiciavimas
+void skaiciavimas2(int &n, int &k, Zvejys Z[], Zuvis T[]) {
+    for (int i = 0; i < k; i++) { // zuvu vertinimo sarasas
+        for (int j = 0; j < n; j++) { // zveju sarasas
+            for (int x = 0; x < Z[j].kiekis; x++) { // zveju zuvys
+                if (T[i].pav == Z[j].zuviesPav[x]) {
+                    T[i].masesSuma += Z[j].zuviesMase[x];
+                }
+            }
+        }
+    }
+}
+
 void rikiuotiZuvis(Zuvis T[], int k) {
     for (int i = 0; i < k-1; i++) {
         for (int j = i+1; j < k; j++) {
-            if (T[i].masesSuma > T[j].masesSuma) {
+            if (T[i].masesSuma < T[j].masesSuma) {
                 swap(T[i], T[j]);
             } else if (T[i].masesSuma == T[j].masesSuma && T[i].pav > T[j].pav) {
                 swap(T[i], T[j]);
@@ -132,11 +128,9 @@ int main() {
     skaityti(n, k, Z, T);
     skaiciavimas(n, k, Z, T);
     skaiciavimas2(n, k, Z, T);
-    rasyti(n, k, Z, T);
     rikiuotiZuvis(T, k);
     rikiuotiDalyvius(Z, n);
+    rasyti(n, k, Z, T);
     
-
-
     return 0;
 }
