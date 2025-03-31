@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -39,13 +38,40 @@ void skaityti(int &d, Begimai data[]) {
     fin.close();
 }
 
+int ieskoti(int &d, Begimai data[], int &minLaikas) {
+    for (int i = 0; i < d; i++) {
+        if (data[i].rytoLaikas > 0 && data[i].vakaroLaikas > 0) { // praleisti dienas su 0
+            if ((data[i].rytoLaikas + data[i].vakaroLaikas) < minLaikas) {
+                minLaikas = data[i].rytoLaikas + data[i].vakaroLaikas;
+            }
+        }
+    }
+    return minLaikas;
+}
+
+void rasyti(int &d, Begimai data[], int &minLaikas, int &minDiena) {
+    ofstream fout("u1res.txt");
+
+    fout << "Minimalus laikas" << endl;
+    fout << minLaikas << endl;
+
+    fout << "Dienos" << endl;
+    for (int i = 0; i < d; i++) {
+        if (minLaikas == data[i].rytoLaikas + data[i].vakaroLaikas) {
+            fout << data[i].diena << " ";
+        }
+    }
+  
+    fout.close();
+}
+
 int main() {
     Begimai data[31];
-    int d;
+    int d, minLaikas = 99, minDiena = 0;
 
     skaityti(d, data);
+    ieskoti(d, data, minLaikas);
+    rasyti(d, data, minLaikas, minDiena);
 
-    for (int i = 0; i < d; i++) {
-        cout << data[i].rytoLaikas << " " << data[i].vakaroLaikas << endl;
-    }
+    return 0;
 }
