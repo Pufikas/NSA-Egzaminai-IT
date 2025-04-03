@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -58,25 +57,42 @@ int main() {
 
     skaiciavimas(mokSk, data);
 
-// sutvarkyt
+    // suranda didziausia taskus
     for (int i = 0; i < mokSk; i++) {
-        for (int j = i+1; j < mokSk; j++) {
-            if (data[i].taskai > didzTaskai) didzTaskai = data[i].taskai;
-            if (data[i].taskai > data[j].taskai) {
-                swap(data[i], data[j]);
-            } else if ((data[i].taskai == data[j].taskai) && data[i].laikas < data[j].laikas) {
-                swap(data[i], data[j]);
+        if (data[i].taskai > didzTaskai) {
+            didzTaskai = data[i].taskai;
+        }
+    }
+
+    // rikiuoja visus mokinius pagal taskus
+    for (int i = 0; i < mokSk-1; i++) {
+        for (int j = 0; j < mokSk-i-1; j++) {
+            if (data[j].taskai < data[j+1].taskai)
+                swap(data[j], data[j+1]);
+        }
+    }
+
+    // rikiuoja tik jeigu yra lygus didzTaskai, tuomet rikiuoja pagal teisingai isprestu uzd kieki ir uzgaista laika
+    for (int i = 0; i < mokSk-1; i++) {
+        for (int j = 0; j < mokSk-i-1; j++) {
+            if (data[j].taskai == didzTaskai && data[j+1].taskai == didzTaskai) {
+                if (data[j].teisingi < data[j+1].teisingi) {
+                    swap(data[j], data[j+1]);
+                }
+                else if (data[j].teisingi == data[j+1].teisingi && 
+                        data[j].laikas > data[j+1].laikas) {
+                    swap(data[j], data[j+1]);
+                }
             }
         }
     }
 
-    cout << didzTaskai << endl;
+    fout << didzTaskai << endl;
     for (int i = 0; i < mokSk; i++) {
         if (data[i].taskai == didzTaskai) {
-            cout << data[i].vardas << " " << data[i].taskai << " " << data[i].laikas << " " << data[i].teisingi << endl;
+            fout << data[i].vardas << " " << data[i].teisingi << " " << data[i].laikas << endl;
         }
     }
-
 
     fout.close();
     return 0;
