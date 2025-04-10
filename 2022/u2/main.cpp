@@ -66,10 +66,11 @@ int main() {
 
     skaityti(d, P);
 
+cout << "|a";
     for (int i = 0; i < d; i++) {
         for (int j = 0; j < P[i].k; j++) {
             cout << P[i].k << " " << P[i].pav[j] << " " << P[i].laikas[j] << " " << P[i].atl[j] << endl;
-
+            
         }
     }
 
