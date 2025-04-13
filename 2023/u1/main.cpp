@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 
 using namespace std;
@@ -7,7 +6,7 @@ struct Mokinys {
     int dienos[7];
     int kl = 0;
     int zingIlgis = 0;
-    bool visiDuomenys = true;
+    bool visiDuomenys = true; // ar neivede 0
 };
 
 struct Klase {
@@ -20,7 +19,7 @@ void skaiciuoti(Mokinys data[], Klase Klases[], int &m, int &klasiuKiekis) {
     ifstream fin("u1.txt");
     fin >> m;
 
-    // raso duomenys
+    // raso mokinio duomenys
     for (int i = 0; i < m; i++) {
         fin >> data[i].kl >> data[i].zingIlgis;
         for (int j = 0; j < 7; j++) {
@@ -32,7 +31,7 @@ void skaiciuoti(Mokinys data[], Klase Klases[], int &m, int &klasiuKiekis) {
     }
 
     // raso unikales klases
-    bool unikalesKlases[13] = {false};
+    bool unikalesKlases[13] = {false}; // logine operacija, jeigu true tai yra duomenu jame (visu 12 klasiu neprintins, printina tik tas kur yra true)
     klasiuKiekis = 0;
 
     for (int i = 0; i < m; i++) {
@@ -44,7 +43,6 @@ void skaiciuoti(Mokinys data[], Klase Klases[], int &m, int &klasiuKiekis) {
     }
 
     // skaiciuoja kiekvienai klasei zingsnius
-
     for (int i = 0; i < klasiuKiekis; i++) {
         for (int j = 0; j < m; j++) {
             if (data[j].kl == Klases[i].kl && data[j].visiDuomenys) {
