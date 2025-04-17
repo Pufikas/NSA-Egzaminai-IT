@@ -16,7 +16,7 @@ struct Slaptazodis {
 };
 
 struct PanasusSlap {
-    string name = "";
+    string slap = "";
     int panasumas = 0;
 };
 
@@ -29,8 +29,6 @@ void skaityti(Slaptazodis S[], Slaptazodis V[], int &n, int &s) {
         fin >> ws;
         fin.get(laikinas, 15);
         S[i].slap = laikinas;
-        //cout << S[i].slap << " ";
-        
         fin >> S[i].ilgis >> S[i].didzRaides >> S[i].mazRaides >> S[i].skaiciuKiekis >> S[i].specSimboliai;
     }
     
@@ -79,28 +77,28 @@ void rusiuoti(PanasusSlap PS[], int &cc) {
     }
 }
 
-void rasyti() {
-    //
+// fix
+void rasyti(Slaptazodis S[], PanasusSlap PS[], int &cc, int &n) {
+    ofstream fout("u2res.txt");
+    for (int i = 0; i < n; i++) {
+        fout << S[i].slap << " " << S[i].stiprumas << endl;
+        for (int j = 0; j < cc; j++) {
+            fout << PS[j].slap << endl;
+        }
+    }
+    fout.close();
 }
 
 int main() {
     Slaptazodis S[5];
     Slaptazodis V[25];
     PanasusSlap PS[25];
-    int n, s;
+    int n, s, cc;
 
     skaityti(S, V, n, s);
     skaiciuoti(S, V, PS, n, s, cc);
     rusiuoti(PS, cc);
+    rasyti(S, PS, cc, n);
  
-    for (int i = 0; i < s; i++) {
-        cout << ps[i] << endl;
-        //cout << V[i].slap << " " << V[i].ilgis << " " << V[i].didzRaides << " " << V[i].mazRaides << " " << V[i].skaiciuKiekis << " " << V[i].specSimboliai << endl;
-        //cout << S[i].slap << endl;
-        //cout << S[i].slap << " " 
-        //     << S[i].ilgis << " " << S[i].mazRaides << " "
-         //    << S[i].skaiciuKiekis << " " << S[i].specSimboliai << " " << endl;
-    }
-
     return 0;
 }
