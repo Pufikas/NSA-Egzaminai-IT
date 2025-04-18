@@ -18,6 +18,7 @@ struct Slaptazodis {
 struct PanasusSlap {
     string slap = "";
     int panasumas = 0;
+    string stiprumas;
 };
 
 void skaityti(Slaptazodis S[], Slaptazodis V[], int &n, int &s) {
@@ -49,8 +50,6 @@ void skaityti(Slaptazodis S[], Slaptazodis V[], int &n, int &s) {
 
 void skaiciuoti(Slaptazodis S[], Slaptazodis V[], PanasusSlap PS[], int &n, int &s, int &cc) {
     for (int i = 0; i < n; i++) {
-        int panasumoReiksme = 99;
-        int slapVt = -1; // slaptazodzio kuris labiausiai panasus vieta
         for (int j = 0; j < s; j++) {
             int pan = 0;
 
@@ -62,6 +61,7 @@ void skaiciuoti(Slaptazodis S[], Slaptazodis V[], PanasusSlap PS[], int &n, int 
 
             PS[cc].slap = V[j].slap;
             PS[cc].panasumas = pan;
+            PS[cc].stiprumas = V[j].stiprumas;
             cc++;
         }
     }
@@ -69,7 +69,7 @@ void skaiciuoti(Slaptazodis S[], Slaptazodis V[], PanasusSlap PS[], int &n, int 
 
 void rusiuoti(PanasusSlap PS[], int &cc) {
     for (int i = 0; i < cc-1; i++) {
-        for (int j = i+1; j < cc; j++) {
+        for (int j = i+1; j < cc-1; j++) {
             if (PS[j].panasumas < PS[i].panasumas) {
                 swap(PS[i], PS[j]);
             }
@@ -77,17 +77,16 @@ void rusiuoti(PanasusSlap PS[], int &cc) {
     }
 }
 
-// fix
+// ai krc
 void rasyti(Slaptazodis S[], PanasusSlap PS[], int &cc, int &n) {
     ofstream fout("u2res.txt");
-    for (int i = 0; i < n; i++) {
-        fout << S[i].slap << " " << S[i].stiprumas << endl;
-        for (int j = 0; j < cc; j++) {
-            fout << PS[j].slap << endl;
-        }
+    for (int i = 0; i < cc; i++) {
+        fout << PS[i].slap << " " << PS[i].panasumas << endl;
     }
     fout.close();
 }
+
+
 
 int main() {
     Slaptazodis S[5];
