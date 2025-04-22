@@ -18,6 +18,8 @@ struct Draugai {
     int tVal[MAX_VAL];
 };
 
+
+
 void skaityti(int &d, int &dr, Dienos D[], Draugai DR[]) {
     ifstream fin("u2.txt");
 
@@ -49,9 +51,22 @@ void skaityti(int &d, int &dr, Dienos D[], Draugai DR[]) {
 
 void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[]) {
     int didz = -1;
+    string diena = "";
+    int aa = 0;
 
-    for (int i = 0; i < dr; i++) { // per draugu laikus
-
+    for (int i = 0; i < d; i++) { // per dienas
+        for (int j = 0; j < dr; j++) { // per draugus
+            if (D[i].nr == DR[j].tDiena[j]) {
+                for (int a = 0; a < D[i].laisvuVal; a++) {
+                    if (D[i].valandos[a] == DR[j].tVal[j]) {
+                        aa++;
+                        diena = D[i].nr;
+                        cout << DR[i].vardas << " " << D[i].valandos[a] << " " << DR[j].tVal[j] << endl;
+                        //cout << aa << " " << diena << endl; 
+                    }
+                }
+            }
+        }
     }
 }
 
