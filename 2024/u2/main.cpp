@@ -18,6 +18,12 @@ struct Draugai {
     int tVal[MAX_VAL];
 };
 
+struct Rezultatai {
+    string diena;
+    int valanda;
+    int kiekis;
+    string draugai[20];
+};
 
 
 void skaityti(int &d, int &dr, Dienos D[], Draugai DR[]) {
@@ -49,34 +55,46 @@ void skaityti(int &d, int &dr, Dienos D[], Draugai DR[]) {
     fin.close();
 }
 
-void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[]) {
-    int didz = -1;
-    string diena = "";
-    int aa = 0;
+void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[], Rezultatai R[]) {
+    for (int i = 0; i < d; i++) {
+        for (int j = 0; j < D[i].laisvuVal; j++) {
+            int kiek = 0;
 
-    for (int i = 0; i < d; i++) { // per dienas
-        for (int j = 0; j < dr; j++) { // per draugus
-            if (D[i].nr == DR[j].tDiena[j]) {
-                for (int a = 0; a < D[i].laisvuVal; a++) {
-                    if (D[i].valandos[a] == DR[j].tVal[j]) {
-                        aa++;
-                        diena = D[i].nr;
-                        cout << DR[i].vardas << " " << D[i].valandos[a] << " " << DR[j].tVal[j] << endl;
-                        //cout << aa << " " << diena << endl; 
+            // kiek draugu tinka i laika
+            for (int k = 0; k < dr; k++) {
+                for (int l = 0; l < DR[k].isv; l++) {
+                    if (D[i].nr == DR[k].tDiena[l] && D[i].valandos[j] == DR[k].tVal[l]) {
+                        R[kiek] = DR[k].vardas;
+                        kiek++;
+                        break;
                     }
                 }
             }
-        }
-    }
+
+    // for (int i = 0; i < d; i++) { // per dienas
+    //     for (int j = 0; j < dr; j++) { // per draugus
+    //         if (D[i].nr == DR[j].tDiena[j]) {
+    //             for (int a = 0; a < D[i].laisvuVal; a++) {
+    //                 if (D[i].valandos[a] == DR[j].tVal[j]) {
+    //                     aa++;
+    //                     diena = D[i].nr;
+    //                     cout << DR[i].vardas << " " << D[i].valandos[a] << " " << DR[j].tVal[j] << endl;
+    //                     //cout << aa << " " << diena << endl; 
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 int main() {
     Dienos D[7];
     Draugai DR[20];
+    Rezultatai R[20];
     int d, dr;
 
     skaityti(d, dr, D, DR);
-    skaiciuoti(d, dr, D, DR);
+    skaiciuoti(d, dr, D, DR, R);
 
     // cout << d << " " << dr << endl;
     // for (int i = 0; i < d; i++) {
