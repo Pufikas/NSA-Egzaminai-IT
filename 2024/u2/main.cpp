@@ -56,6 +56,9 @@ void skaityti(int &d, int &dr, Dienos D[], Draugai DR[]) {
 }
 
 void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[], Rezultatai R[]) {
+    string drg[20];
+
+    int isv = 0;
     for (int i = 0; i < d; i++) {
         for (int j = 0; j < D[i].laisvuVal; j++) {
             int kiek = 0;
@@ -64,27 +67,26 @@ void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[], Rezultatai R[]) {
             for (int k = 0; k < dr; k++) {
                 for (int l = 0; l < DR[k].isv; l++) {
                     if (D[i].nr == DR[k].tDiena[l] && D[i].valandos[j] == DR[k].tVal[l]) {
-                        R[kiek] = DR[k].vardas;
+                        drg[kiek] = DR[k].vardas;
                         kiek++;
                         break;
                     }
                 }
             }
 
-    // for (int i = 0; i < d; i++) { // per dienas
-    //     for (int j = 0; j < dr; j++) { // per draugus
-    //         if (D[i].nr == DR[j].tDiena[j]) {
-    //             for (int a = 0; a < D[i].laisvuVal; a++) {
-    //                 if (D[i].valandos[a] == DR[j].tVal[j]) {
-    //                     aa++;
-    //                     diena = D[i].nr;
-    //                     cout << DR[i].vardas << " " << D[i].valandos[a] << " " << DR[j].tVal[j] << endl;
-    //                     //cout << aa << " " << diena << endl; 
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+            
+            R[isv].diena = D[i].nr;
+            R[isv].valanda = D[i].valandos[j];
+            R[isv].kiekis = kiek;
+
+            for (int m = 0; m < kiek; m++) {
+                R[isv].draugai[m] = drg[m];
+            }
+
+            isv++;
+            
+        }
+    }
 }
 
 int main() {
