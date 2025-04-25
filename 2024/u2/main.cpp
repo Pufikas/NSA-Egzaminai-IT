@@ -55,10 +55,9 @@ void skaityti(int &d, int &dr, Dienos D[], Draugai DR[]) {
     fin.close();
 }
 
-void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[], Rezultatai R[]) {
+void skaiciuoti(int &d, int &dr, int &isv, Dienos D[], Draugai DR[], Rezultatai R[]) {
     string drg[20];
 
-    int isv = 0;
     for (int i = 0; i < d; i++) {
         for (int j = 0; j < D[i].laisvuVal; j++) {
             int kiek = 0;
@@ -74,29 +73,56 @@ void skaiciuoti(int &d, int &dr, Dienos D[], Draugai DR[], Rezultatai R[]) {
                 }
             }
 
-            
-            R[isv].diena = D[i].nr;
-            R[isv].valanda = D[i].valandos[j];
-            R[isv].kiekis = kiek;
+            if (kiek >= 4) { // turi buti maziau nei keturi draugai (pagal uzduoti)
+                R[isv].diena = D[i].nr;
+                R[isv].valanda = D[i].valandos[j];
+                R[isv].kiekis = kiek;
 
-            for (int m = 0; m < kiek; m++) {
-                R[isv].draugai[m] = drg[m];
+                for (int m = 0; m < kiek; m++) {
+                    R[isv].draugai[m] = drg[m];
+                }
+                isv++;
             }
 
-            isv++;
             
         }
     }
+}
+
+void rusiuoti(int &isv, Rezultatai R[]) {
+    for (int i = 0; i < isv; i++) {
+        for (int j = i+1; j < isv; j++) {
+            if (R[i].kiekis < R[j].kiekis) swap(R[i], R[j]);
+        }
+    }
+}
+
+void rasyti(int &isv, Rezultatai R[]) {
+    ofstream fout("U2rez.txt");
+
+
+    for (int i = 0; i < isv; i++) {
+        fout << R[i].diena << " " << R[i].valanda << " " << R[i].kiekis << endl;
+        for (int j = 0; j < R[i].kiekis; j++) {
+            fout << R[i].draugai[j] << endl;
+        }
+    }
+
+    
+
+    fout.close();
 }
 
 int main() {
     Dienos D[7];
     Draugai DR[20];
     Rezultatai R[20];
-    int d, dr;
+    int d, dr, isv = 0;
 
     skaityti(d, dr, D, DR);
-    skaiciuoti(d, dr, D, DR, R);
+    skaiciuoti(d, dr, isv, D, DR, R);
+    rusiuoti(isv, R);
+    rasyti(isv, R);
 
     // cout << d << " " << dr << endl;
     // for (int i = 0; i < d; i++) {
