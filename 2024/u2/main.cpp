@@ -1,5 +1,5 @@
 #include <fstream>
-#include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -73,23 +73,28 @@ void skaiciuoti(int &d, int &dr, int &isv, Dienos D[], Draugai DR[], Rezultatai 
                 }
             }
 
-            if (kiek >= 4) { // turi buti maziau nei keturi draugai (pagal uzduoti)
+            if (kiek >= 4) {
+                // rusiuoja vardus abeceliskai
+                for (int m = 0; m < kiek; m++) {
+                    for (int n = m+1; n < kiek; n++) {
+                        if (drg[m] > drg[n]) swap(drg[m], drg[n]);
+                    }
+                }
+
                 R[isv].diena = D[i].nr;
                 R[isv].valanda = D[i].valandos[j];
                 R[isv].kiekis = kiek;
-
                 for (int m = 0; m < kiek; m++) {
                     R[isv].draugai[m] = drg[m];
                 }
                 isv++;
             }
-
-            
         }
     }
 }
 
 void rusiuoti(int &isv, Rezultatai R[]) {
+    // rusiuoja rezultatus pagal laika draugu skaiciu mazejanciai
     for (int i = 0; i < isv; i++) {
         for (int j = i+1; j < isv; j++) {
             if (R[i].kiekis < R[j].kiekis) swap(R[i], R[j]);
@@ -100,15 +105,13 @@ void rusiuoti(int &isv, Rezultatai R[]) {
 void rasyti(int &isv, Rezultatai R[]) {
     ofstream fout("U2rez.txt");
 
-
     for (int i = 0; i < isv; i++) {
-        fout << R[i].diena << " " << R[i].valanda << " " << R[i].kiekis << endl;
+        // 4 simboliu vieta
+        fout << left << setw(3) << R[i].diena << " " << R[i].valanda << " " << R[i].kiekis << endl;
         for (int j = 0; j < R[i].kiekis; j++) {
             fout << R[i].draugai[j] << endl;
         }
     }
-
-    
 
     fout.close();
 }
@@ -123,24 +126,6 @@ int main() {
     skaiciuoti(d, dr, isv, D, DR, R);
     rusiuoti(isv, R);
     rasyti(isv, R);
-
-    // cout << d << " " << dr << endl;
-    // for (int i = 0; i < d; i++) {
-    //     cout << D[i].nr << " " << D[i].laisvuVal << " ";
-    //     for (int j = 0; j < D[i].laisvuVal; j++) {
-    //         cout << D[i].valandos[j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-
-    cout << dr << endl;
-    for (int i = 0; i < dr; i++) {
-        cout << DR[i].vardas << " ";
-        for (int j = 0; j < DR[i].isv; j++) {
-            cout << " " << DR[i].tDiena[j] << " " << DR[i].tVal[j];
-        }
-        cout << endl;
-    }
 
     return 0;
 }
