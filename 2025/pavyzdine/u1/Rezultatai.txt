@@ -1,0 +1,3 @@
+Disko metimo duomenų analizės rezultatai:
+
+Olimpinės žaidynės:Vidutiniškai diskas skriejo 68.2675 m.
