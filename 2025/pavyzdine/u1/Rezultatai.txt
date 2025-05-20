@@ -1,3 +1,6 @@
 Disko metimo duomenų analizės rezultatai:
 
-Olimpinės žaidynės:Vidutiniškai diskas skriejo 68.2675 m.
+Olimpinės žaidynės:
+Vidutiniškai diskas skriejo 68.2675 m.
+Seniausiai pasiektas geriausias rezultatas:
+GUDZIUS 69.59 2018 Sweden
