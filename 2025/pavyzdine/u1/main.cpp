@@ -87,10 +87,29 @@ void anksGeriausiasRez(DiskoMetejai D[], Pasiekimai P[], int &n) {
     fout << gautiMetejoPavarde(P[indeksas].vardas) << " " << P[indeksas].res << " " << anksciausiMetai << " " << P[indeksas].valstybe << endl;
 }
 
-void skaiciuoti()
+void skaiciuoti(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], int &n) {
+    double res = 0;
+
+    for (int i = 0; i < n; i++) {
+        S[i].res = P[i].res - D[i].res;
+        S[i].vardas = D[i].vardas;
+    
+        cout << P[i].vardas << " " << res << endl;
+    }
+
+    // rusiuoti
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (S[i].res < S[j].res) {
+                swap(S[i], S[j]);
+            }
+        }
+    }
+}
 
 int main() {
     DiskoMetejai D[32];
+    DiskoMetejai S[32]; // del 9 uzd
     Pasiekimai P[32];
     int n;
 
@@ -100,6 +119,7 @@ int main() {
     skaitytiFailus(D, P, n);
     skaiciuotiVidurki(D, n);
     anksGeriausiasRez(D, P, n);
+    skaiciuoti(D, DD, P, n);
 
    
     // for (int i = 0; i < n; i++) {
