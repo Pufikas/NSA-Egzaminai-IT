@@ -62,7 +62,6 @@ void skaiciuotiVidurki(DiskoMetejai D[], int &n) {
     fout << "Vidutiniškai diskas skriejo " << vid / n << " m." << endl;
 }
 
-
 string gautiMetejoPavarde(string kodas) {
     return kodas.substr(1); // pasalina pirma raide
     // AGUDZIUS -> GUDZIUS
@@ -72,7 +71,6 @@ int gautiMetus(int metai) {
     return metai / 10000;
     // 20180610 -> 2018
 }
-
 
 void anksGeriausiasRez(DiskoMetejai D[], Pasiekimai P[], int &n) {
     int anksciausiMetai = 9999;
@@ -88,6 +86,8 @@ void anksGeriausiasRez(DiskoMetejai D[], Pasiekimai P[], int &n) {
     fout << "Seniausiai pasiektas geriausias rezultatas:" << endl;
     fout << gautiMetejoPavarde(P[indeksas].vardas) << " " << P[indeksas].res << " " << anksciausiMetai << " " << P[indeksas].valstybe << endl;
 }
+
+void skaiciuoti()
 
 int main() {
     DiskoMetejai D[32];
