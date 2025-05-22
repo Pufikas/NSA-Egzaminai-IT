@@ -83,8 +83,9 @@ void anksGeriausiasRez(DiskoMetejai D[], Pasiekimai P[], int &n) {
         }
     }
 
+    fout << endl;
     fout << "Seniausiai pasiektas geriausias rezultatas:" << endl;
-    fout << gautiMetejoPavarde(P[indeksas].vardas) << " " << P[indeksas].res << " " << anksciausiMetai << " " << P[indeksas].valstybe << endl;
+    fout << gautiMetejoPavarde(P[indeksas].vardas) << " " << P[indeksas].res << " " << anksciausiMetai << " " << P[indeksas].valstybe << endl << endl;
 }
 
 void skaiciuoti(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], int &n) {
@@ -94,16 +95,22 @@ void skaiciuoti(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], int &n) {
         S[i].res = P[i].res - D[i].res;
         S[i].vardas = D[i].vardas;
     
-        cout << P[i].vardas << " " << res << endl;
+        //cout << P[i].vardas << " " << res << endl;
     }
 
     // rusiuoti
     for (int i = 0; i < n; i++) {
         for (int j = i+1; j < n; j++) {
-            if (S[i].res < S[j].res) {
+            if (S[i].res > S[j].res) {
                 swap(S[i], S[j]);
             }
         }
+    }
+
+    // rasymas i faila
+    fout << "Skirtumas tarp sportininkų pasiekimų:" << endl;
+    for (int a = 0; a < n; a++) {
+        fout << gautiMetejoPavarde(S[a].vardas) << " " << S[a].res << " m" << endl;
     }
 }
 
@@ -119,12 +126,12 @@ int main() {
     skaitytiFailus(D, P, n);
     skaiciuotiVidurki(D, n);
     anksGeriausiasRez(D, P, n);
-    skaiciuoti(D, DD, P, n);
+    skaiciuoti(D, S, P, n);
 
    
-    // for (int i = 0; i < n; i++) {
-    //     cout << D[i].vardas << " " << D[i].res << endl;
-    // }
+    for (int i = 0; i < n; i++) {
+        cout << S[i].vardas << " " << S[i].res << endl;
+    }
 
     return 0;
 }

@@ -2,5 +2,16 @@ Disko metimo duomenų analizės rezultatai:
 
 Olimpinės žaidynės:
 Vidutiniškai diskas skriejo 68.2675 m.
+
 Seniausiai pasiektas geriausias rezultatas:
 GUDZIUS 69.59 2018 Sweden
+
+Skirtumas tarp sportininkų pasiekimų:
+STONA -0.95 m
+DENNY 0.04 m
+PRUFER 1.68 m
+CEH 2.07 m
+GUDZIUS 3.04 m
+WEISSHAIDINGER 3.14 m
+ALEKNA 4.38 m
+STAHL 4.91 m
