@@ -52,7 +52,7 @@ void skaitytiFailus(DiskoMetejai D[], Pasiekimai P[], int &n) {
     fin2.close();
 }
 
-void skaiciuotiVidurki(DiskoMetejai D[], int &n) {
+void vidurkisOlimpiniu(DiskoMetejai D[], int &n) {
     float vid = 0;
     
     for (int i = 0; i < n; i++) {
@@ -72,6 +72,19 @@ int gautiMetus(int metai) {
     // 20180610 -> 2018
 }
 
+void skirtumasTarpRez(DiskoMetejai D[], int &n) {
+    double didz = -1;
+    double maz = 999;
+
+    // surandam didziausia ir maziausia reiskme olimpinese 
+    for (int i = 0; i < n; i++) {
+        if (D[i].res > didz) didz = D[i].res;
+        if (D[i].res < maz) maz = D[i].res;
+    }
+
+    fout << "Skirtumas tarp didžiausio ir mažiausio rezultato " << didz - maz << " m." << endl;
+} 
+
 void anksGeriausiasRez(DiskoMetejai D[], Pasiekimai P[], int &n) {
     int anksciausiMetai = 9999;
     int indeksas;
@@ -88,7 +101,7 @@ void anksGeriausiasRez(DiskoMetejai D[], Pasiekimai P[], int &n) {
     fout << gautiMetejoPavarde(P[indeksas].vardas) << " " << P[indeksas].res << " " << anksciausiMetai << " " << P[indeksas].valstybe << endl << endl;
 }
 
-void skaiciuoti(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], int &n) {
+void sportininkuSkirtumai(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], int &n) {
     double res = 0;
 
     for (int i = 0; i < n; i++) {
@@ -114,6 +127,21 @@ void skaiciuoti(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], int &n) {
     }
 }
 
+void vidurkisPasiekimu(DiskoMetejai D[], Pasiekimai P[], int &n) {
+    float sumaOlimp = 0;
+    float sumaPasie = 0;
+    float suma = 0;
+
+    for (int i = 0; i < n; i++) {
+        sumaOlimp += D[i].res;
+        sumaPasie += P[i].res;
+    }
+    suma = (sumaPasie - sumaOlimp) / n;
+
+    fout << "Vidutiniškai diskas skriejo " << sumaPasie / n << " m." << endl; 
+    fout << "Vidurkis " << suma << " m didesnis negu olimpinėse žaidynėse." << endl;
+}
+
 int main() {
     DiskoMetejai D[32];
     DiskoMetejai S[32]; // del 9 uzd
@@ -124,14 +152,16 @@ int main() {
     fout << "Olimpinės žaidynės:" << endl;
 
     skaitytiFailus(D, P, n);
-    skaiciuotiVidurki(D, n);
-    anksGeriausiasRez(D, P, n);
-    skaiciuoti(D, S, P, n);
+    vidurkisOlimpiniu(D, n);
+    skirtumasTarpRez(D, n);
 
-   
-    for (int i = 0; i < n; i++) {
-        cout << S[i].vardas << " " << S[i].res << endl;
-    }
+    fout << endl;
+    fout << "Geriausi rezultatai:" << endl;
+    
+    vidurkisPasiekimu(D, P, n);
+    anksGeriausiasRez(D, P, n);
+    sportininkuSkirtumai(D, S, P, n);
+
 
     return 0;
 }
