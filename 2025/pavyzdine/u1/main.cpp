@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -44,8 +43,6 @@ void skaitytiFailus(DiskoMetejai D[], Pasiekimai P[], int &n) {
         P[j].res = stod(res); // stod -> float
         P[j].data = stoi(data); // stoi -> int
         P[j].valstybe = valstybe;
-
-        //cout << vardas << " " << res << " " << data << " " << valstybe << endl;
     }
 
     fin.close();
@@ -107,8 +104,6 @@ void sportininkuSkirtumai(DiskoMetejai D[], DiskoMetejai S[], Pasiekimai P[], in
     for (int i = 0; i < n; i++) {
         S[i].res = P[i].res - D[i].res;
         S[i].vardas = D[i].vardas;
-    
-        //cout << P[i].vardas << " " << res << endl;
     }
 
     // rusiuoti
